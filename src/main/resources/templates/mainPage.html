@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<main role="main">
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-warning rounded-circle">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-2 font-weight-bold">Bug Tracking Application</h1>
+            <p class="lead font-weight-light"> A simple, full stack bug tracking application made in Java. Front end is HTML, CSS and JS with Vue, back end is Spring Boot and MySQL.</p>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    <div th:replace="fragments/pageTitle :: pageTitle ('MAIN MENU')"></div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card-body bg-warning rounded">
+                    <h5 class="card-text text-center">Manage your projects.</h5>
+                    <a class="btn btn-dark col-12" href="/projects">Projects</a>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card-body bg-warning rounded">
+                    <h5 class="card-text text-center">Manage your items.</h5>
+                    <a class="btn btn-dark col-12" href="/items">Items</a>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card-body bg-warning rounded">
+                    <h5 class="card-text text-center">Visit the project GitHub.</h5>
+                    <a class="btn btn-dark col-12" href="github.com/serban22">Project GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<br><br>
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+        <p>A simple bug tracking application made by Serban Smaranda. Find me on <a href="https://www.linkedin.com/in/serban-costin-smaranda-b69993159/">LinkedIn</a>/<a href="https://www.facebook.com/serban.smaranda">Facebook</a>, or GitHub in the navbar. </p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+insert into bugtrackingsoftware.project values (1, 'Social Security Software', 'SSS v1.0', 'A creative idea to implement a new, more efficient social security system in the Romanian government.', 2);
+insert into bugtrackingsoftware.project values (2, 'Mapping Software', 'KMPS', 'Based off Google Maps and Google Earth, Kaboodle Maps creates a new mapping environment for users, complete with GPS and detailed map representation.', 4);
+insert into bugtrackingsoftware.project values (3, 'Online Shop', 'NOS', 'Nile Online Shop is a new and exciting online shopping experience, which learns and adapts to preferences using a new algorithm.', 1);
+insert into bugtrackingsoftware.project values (4, 'Browser Game', 'OWTD v1.2', 'Old Ways To Die is a first-person shooting browser game, designed to give players an RPG-style experience with a WW2 touch.', 3);

@@ -1,0 +1,29 @@
+body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: navy;
+    background-color: lemonchiffon;
+    font-family: "Courier New";
+}
+.site-header {
+    background-color: navy;
+    -webkit-backdrop-filter: saturate(100%) blur(15px);
+    backdrop-filter: saturate(100%) blur(15px);
+    font-family: "Courier";
+}
+.site-header a {
+    color: white;
+    transition: step-start color .20s;
+}
+.site-header a:hover {
+    color: #c5d8d1;
+    text-decoration: none;
+}
+.mastfoot {
+    color: black;
+    text-align: center;
+}
+.card-header {
+    color: white;
+    background-color: navy;
+}

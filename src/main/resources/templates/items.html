@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta charset="UTF-8">
+    <title>Items</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/pageTitle :: pageTitle ('ITEMS')"></div>
+
+<br><br>
+
+<div class="container" id="main">
+
+    <form v-on:submit.prevent="postItem">
+        <div class="card mb-auto">
+            <div aria-controls="itemForm" aria-expanded="false" class="card-header" data-target="#itemForm"
+                 data-toggle="collapse" id="formHeader" style="cursor: pointer">
+                <div class="float-left">Create new item</div>
+                <div class="float-right">+</div>
+            </div>
+            <div class="card card-body collapse" id="itemForm">
+                <div class="form-group row">
+                    <label for="itemName" class="col-sm-4 col-form-label form-control-lg">Item Name</label>
+                    <input id="itemId" type="hidden" v-model="itemId">
+                    <input id="itemName" class="form-control-lg col-sm-8" placeholder="Type the desired item name..." type="text"
+                           v-model="itemName"/>
+                </div>
+                <div class="form-group row">
+                    <label for="itemStatus" class="col-sm-4 col-form-label form-control-lg">Item Status</label>
+                    <select name="itemStatus" id="itemStatus" v-model="itemStatus">
+                        <option disabled value="">Select status</option>
+                        <option :selected="status.statusName == itemStatus" v-bind:value="status.statusName"
+                                v-for="status in statuses">{{ status.statusName }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="itemType" class="col-sm-4 col-form-label form-control-lg">Item Type</label>
+                    <select name="itemType" id="itemType" v-model="itemType">
+                        <option disabled value="">Select type</option>
+                        <option :selected="type.typeName == itemType" v-bind:value="type.typeName"
+                                v-for="type in types">{{ type.typeName }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-sm-4"></div>
+                    <button class="btn btn-primary col col-sm-8" type="submit">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br> <br>
+
+    <table class="table table-striped table-dark table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr align="center">
+            <th>ID</th>
+            <th>Item Name</th>
+            <th>Item Status</th>
+            <th>Item Type</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr align="center" v-for="item in items">
+            <td>{{ item.itemId }}</td>
+            <td>{{ item.itemName }}</td>
+            <td>{{ item.itemStatus }}</td>
+            <td>{{ item.itemType }}</td>
+            <td align="center">
+                <button class="btn btn-success" v-on:click="editItem(item)">Modify</button>
+                <button class="btn btn-warning" v-on:click="deleteItem(item)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br><br>
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+        <p>A simple bug tracking application made by Serban Smaranda. Find me on <a href="https://www.linkedin.com/in/serban-costin-smaranda-b69993159/">LinkedIn</a>/<a href="https://www.facebook.com/serban.smaranda">Facebook</a>, or GitHub in the navbar.</p>
+    </div>
+</footer>
+
+<script src="webjars/vue/vue.min.js"></script>
+<script src="webjars/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#main',
+        data() {
+            return {
+                items: '',
+                statuses: '',
+                types: '',
+                itemId: '',
+                itemName: '',
+                itemStatus: '',
+                itemType: ''
+            }
+        },
+        mounted() {
+            this.getItems();
+        },
+        methods: {
+            getItems: function () {
+                console.log('Returning items, please wait...');
+                axios.get("/api/v1/items").then(response => (this.items = response.data));
+                axios.get("/api/v1/statuses").then(response => (this.statuses = response.data));
+                axios.get("/api/v1/types").then(response => (this.types = response.data));
+            },
+            editItem: function (item) {
+                this.itemId = item.itemId;
+                this.itemName = item.itemName;
+                this.itemStatus = item.itemStatus;
+                this.itemType = item.itemType;
+                document.getElementById('itemForm').setAttribute("class", document.getElementById('itemForm').getAttribute("class") + " show");
+            },
+            postItem: function (item) {
+                if (this.itemId == '' || this.itemId == null) {
+                    axios.post("api/v1/create-new-item", {
+                        "itemId": this.itemId,
+                        "itemName": this.itemName,
+                        "itemStatus": this.itemStatus,
+                        "itemType": this.itemType
+                    }).then(savedItem => {
+                        this.items.push(savedItem.data);
+                        this.itemName = '';
+                        this.itemStatus = '';
+                        this.itemType = '';
+                    })
+                    console.log('Your new item was added.')
+                } else {
+                    axios.put("api/v1/update-item/" + this.itemId, {
+                        "itemId": this.itemId,
+                        "itemName": this.itemName,
+                        "itemStatus": this.itemStatus,
+                        "itemType": this.itemType
+                    }).then(editedItem => {
+                        this.getItems();
+                        this.itemId = '';
+                        this.itemName = '';
+                        this.itemStatus = '';
+                        this.itemType = '';
+                    })
+                    console.log('The item was updated.');
+                }
+            },
+            deleteItem: async function (item) {
+                await axios.delete("api/v1/item/" + item.itemId);
+                this.getItems();
+                console.log('The item was deleted.')
+            }
+        }
+    })
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
