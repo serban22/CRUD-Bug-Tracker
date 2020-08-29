@@ -83,6 +83,7 @@ public class ItemService {
         return savedItem;
     }
 
+    @Transactional
     public ItemEntity updateByItemId(Integer id, ItemDTO itemToBeUpdated) {
 
         ItemEntity itemEntity;
@@ -110,6 +111,7 @@ public class ItemService {
         return itemRepository.save(itemEntity);
     }
 
+    @Transactional
     public List<ItemDTO> getAllItems() {
         List<ItemEntity> allItems = itemRepository.findAll();
         List<ItemDTO> itemDTOS = new ArrayList<>();
