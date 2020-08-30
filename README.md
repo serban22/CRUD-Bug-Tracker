@@ -3,7 +3,7 @@ Web application for adding projects and items in the database, consisting of two
 1. Backend in Java
 2. Frontend on HTML, CSS, JavaScript (Vue.js framework)
 
-##Functions:
+## Functions:
 1. Add new projects
 2. Add new items
 3. Create new project/s
@@ -12,7 +12,7 @@ Web application for adding projects and items in the database, consisting of two
 6. Delete existing projects/items
 7. Read existing projects/items
 
-##Technologies used:
+## Technologies used:
 1. MySQL
 2. Spring Boot
 3. Spring Data JPA
